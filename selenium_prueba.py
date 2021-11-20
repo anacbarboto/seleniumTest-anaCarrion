@@ -25,12 +25,23 @@ class PythonOrgSearch(unittest.TestCase):
             print(facultad.get_attribute("href").split("#")[-1])
             print(facultad.text)
 
-            if (i > 2):
-                driver.execute_script("arguments[0].scrollIntoView();", facultad)
+            #Scroll
+            if (i == 3):
+                print("abajo")
+                driver.execute_script("arguments[0].scrollIntoView(true);", facultad)
 
-            driver.execute_script("arguments[0].click();", facultad)
-            ActionChains(driver).click_and_hold(facultad).perform()
+            #Abrir textos linkeados del lado izquierdo
+            if (i < 5):
+                driver.execute_script("arguments[0].click();", facultad)
+                ActionChains(driver).click_and_hold(facultad).perform()
+            
+            #Sube y lee textos linkeados del lado derecho
+            if (i > 5 or i == 5):
+                print("arriba")
+                driver.execute_script("window.scrollTo(0,300);")
+                driver.execute_script("arguments[0].click();", facultad)
 
+            #Leer nombres de las materias
             if (facultad.get_attribute("aria-expanded")):
                 todas_las_materias = driver.find_elements(By.XPATH, '//div[@id="'+facultad.get_attribute("href").split("#")[-1]+'"]//div[@class="field-content"]//ul//li//a')
                 for materia in todas_las_materias:
