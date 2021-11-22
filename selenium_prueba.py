@@ -8,10 +8,23 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 #from webdriver_manager.firefox import GeckoDriverManager
 
+def scroll_shim(passed_in_driver, object):
+    x = object.location['x']
+    y = object.location['y']
+    scroll_by_coord = 'window.scrollTo(%s,%s);' % (
+        x,
+        y
+    )
+    scroll_nav_out_of_way = 'window.scrollBy(0, -120);'
+    passed_in_driver.execute_script(scroll_by_coord)
+    passed_in_driver.execute_script(scroll_nav_out_of_way)
+
 class PythonOrgSearch(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome("C:\\Users\\User\\Downloads\\chromedriver.exe")
+        options = webdriver.ChromeOptions()
+        options.add_experimental_option('excludeSwitches', ['enable-logging'])
+        self.driver = webdriver.Chrome(executable_path="C:\\Users\\User\\Downloads\\chromedriver.exe", chrome_options=options)
 
     def test_search_in_python_org(self):
         driver = self.driver
@@ -23,6 +36,7 @@ class PythonOrgSearch(unittest.TestCase):
         for facultad in facultades:
             i = i + 1
             print(facultad.get_attribute("href").split("#")[-1])
+            print("FACULTAD---------------------------------------")
             print(facultad.text)
 
             #Scroll
@@ -30,23 +44,27 @@ class PythonOrgSearch(unittest.TestCase):
                 print("abajo")
                 driver.execute_script("arguments[0].scrollIntoView(true);", facultad)
 
+            if (i >= 5):
+                driver.execute_script("window.scrollTo(0,300);")
+                last_height = driver.execute_script("return document.body.scrollHeight")
+                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                driver.execute_script("arguments[0].click();", facultad)
+                ActionChains(driver).click_and_hold(facultad).perform()
+
             #Abrir textos linkeados del lado izquierdo
             if (i < 5):
                 driver.execute_script("arguments[0].click();", facultad)
                 ActionChains(driver).click_and_hold(facultad).perform()
             
-            #Sube y lee textos linkeados del lado derecho
-            if (i > 5 or i == 5):
-                print("arriba")
-                driver.execute_script("window.scrollTo(0,300);")
-                driver.execute_script("arguments[0].click();", facultad)
 
             #Leer nombres de las materias
             if (facultad.get_attribute("aria-expanded")):
                 todas_las_materias = driver.find_elements(By.XPATH, '//div[@id="'+facultad.get_attribute("href").split("#")[-1]+'"]//div[@class="field-content"]//ul//li//a')
                 for materia in todas_las_materias:
+                    print("Materia")
                     print(materia.get_attribute("href"))
                     print(materia.text)
+                
 
     def tearDown(self):
         self.driver.close()
