@@ -10,3 +10,5 @@ class CareerPageLocators(object):
     come here"""
 
     ABET_HREF = (By.XPATH, '//a[@href="http://www.abet.org"]')
+    ABET_OCEANOGRAPHY = (By.XPATH, '//a[@href="https://amspub.abet.org/aps/category-search?disciplines=57"]')
+    ABET_FOOD = (By.XPATH, '//img[@src="/sites/fimcp.espol.edu.ec/files/EAC-RGB-W-L.jpg"]')
