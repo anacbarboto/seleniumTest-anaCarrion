@@ -14,7 +14,6 @@ class ESPOLSearch(unittest.TestCase):
         self.driver.get("https://www.espol.edu.ec/es/educacion")
 
     def test_search_in_espol(self):
-
         #Load the main page. In this case the home page of Python.org.
         main_page = page.EspolEducationPage(self.driver, [], [])
 

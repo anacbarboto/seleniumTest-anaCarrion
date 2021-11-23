@@ -33,7 +33,8 @@ class EspolEducationPage(BasePage):
     def create_excel_file(self):
 
         wb = openpyxl.Workbook()
-        hoja = wb.create_sheet("Hoja")
+        hoja = wb.active
+        hoja.title = 'Carreras de ESPOL'
         hoja.append(('Carrera', 'Facultad', 'Link'))
 
         principal_window = self.driver.current_window_handle
