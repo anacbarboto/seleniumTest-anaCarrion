@@ -36,31 +36,23 @@ class PythonOrgSearch(unittest.TestCase):
         for facultad in facultades:
             i = i + 1
             print(facultad.get_attribute("href").split("#")[-1])
-            print("FACULTAD---------------------------------------")
             print(facultad.text)
 
-            #Scroll
-            if (i == 3):
-                print("abajo")
-                driver.execute_script("arguments[0].scrollIntoView(true);", facultad)
-
-            if (i >= 5):
-                driver.execute_script("window.scrollTo(0,300);")
-                last_height = driver.execute_script("return document.body.scrollHeight")
-                driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-                driver.execute_script("arguments[0].click();", facultad)
-                ActionChains(driver).click_and_hold(facultad).perform()
-
-            #Abrir textos linkeados del lado izquierdo
             if (i < 5):
+                driver.execute_script("arguments[0].scrollIntoView(true);", facultad)
                 driver.execute_script("arguments[0].click();", facultad)
                 ActionChains(driver).click_and_hold(facultad).perform()
-            
-
+            else:
+                driver.execute_script("arguments[0].setAttribute('class','accordion-toggle')", facultad)
+                driver.execute_script("arguments[0].setAttribute('aria-expanded','true')", facultad)
+                
             #Leer nombres de las materias
             if (facultad.get_attribute("aria-expanded")):
                 todas_las_materias = driver.find_elements(By.XPATH, '//div[@id="'+facultad.get_attribute("href").split("#")[-1]+'"]//div[@class="field-content"]//ul//li//a')
                 for materia in todas_las_materias:
+                    driver.execute_script("arguments[0].setAttribute('class','panel-collapse collapse in')", materia)
+                    driver.execute_script("arguments[0].setAttribute('aria-expanded','true')", materia)
+                    driver.execute_script("arguments[0].setAttribute('style','')", materia)
                     print("Materia")
                     print(materia.get_attribute("href"))
                     print(materia.text)
