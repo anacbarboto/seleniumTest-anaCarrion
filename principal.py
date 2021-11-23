@@ -22,7 +22,7 @@ class ESPOLSearch(unittest.TestCase):
         main_page = page.EspolEducationPage(self.driver)
 
         #Create a excel file
-        main_page.create_excel_file()
+        #main_page.create_excel_file()
         
         #Create and print a list of carees that has abet certification
         main_page.show_abet_list()
