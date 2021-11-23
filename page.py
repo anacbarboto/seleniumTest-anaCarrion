@@ -31,54 +31,51 @@ class EspolEducationPage(BasePage):
         return self.driver.find_elements(By.XPATH, '//div[@id="'+codigo+'"]//div[@class="field-content"]//ul//li//a')
 
     def create_excel_file(self):
-
+        print("Creating an excel file.")
         wb = openpyxl.Workbook()
-        hoja = wb.active
-        hoja.title = 'Carreras de ESPOL'
-        hoja.append(('Carrera', 'Facultad', 'Link'))
+        ws = wb.active
+        ws.title = 'Carreras de ESPOL'
+        ws.append(('Carrera', 'Facultad', 'Link'))
 
-        principal_window = self.driver.current_window_handle
-        facultades = self.get_faculties()
-        href = []
-        nombres_facultades = []
+        faculties = self.get_faculties()
+        list_href = []
+        list_careers_name = []
 
-        #Leer nombres de las facultades
         i = 0
-        c = 0
-        for facultad in facultades:
-            codigo = facultad.get_attribute("href").split("#")[-1]
-
+        z = 0
+        for f in faculties:
+            code_id = f.get_attribute("href").split("#")[-1]
+            print(f.text)
             i = i + 1
             if (i < 5):
-                self.driver.execute_script("arguments[0].scrollIntoView(true);", facultad)
-                self.driver.execute_script("arguments[0].click();", facultad)
-                ActionChains(self.driver).click_and_hold(facultad).perform()
+                self.driver.execute_script("arguments[0].scrollIntoView(true);", f)
+                self.driver.execute_script("arguments[0].click();", f)
+                ActionChains(self.driver).click_and_hold(f).perform()
             else:
                 self.driver.execute_script("window.scrollTo(0, 0);")
-                self.driver.execute_script("arguments[0].click();", facultad)
+                self.driver.execute_script("arguments[0].click();", f)
                 
-            #Leer nombres de las materias
-            if (facultad.get_attribute("aria-expanded")):
-                todas_las_materias = self.get_classes(codigo)
-                for materia in todas_las_materias:
+            if (f.get_attribute("aria-expanded")):
+                careers = self.get_classes(code_id)
+                for c in careers:
+                    list_href.append(c.get_attribute("href"))
+                    list_careers_name.append(c.text)
 
-                    href.append(materia.get_attribute("href"))
-                    nombres_facultades.append(materia.text)
-
-                    c = c + 1
-                    hoja.cell(row=c, column=1).value = materia.text
-                    hoja.cell(row=c, column=2).value= facultad.text
-                    hoja.cell(row=c, column=3).value= materia.get_attribute("href")
-                    print(materia.text)
-                    print(facultad.text)
-                    print(materia.get_attribute("href"))
+                    z = z + 1
+                    ws.cell(row=z, column=1).value = c.text
+                    ws.cell(row=z, column=2).value= f.text
+                    ws.cell(row=z, column=3).value= c.get_attribute("href")
+                    print(c.text)
+                    print(c.get_attribute("href"))
     
         wb.save('educacion_espol.xlsx')
         wb.close()
-        self.list_href = href
-        self.careers_name = nombres_facultades
+        self.list_href = list_href
+        self.careers_name = list_careers_name
+        print("educacion_espol.xlsx was saved.")
     
     def show_abet_list(self):
+        print("Searching careers which have abet certification.")
         abet_list = []
         list_href = self.list_href
         j = 0
@@ -93,22 +90,18 @@ class EspolEducationPage(BasePage):
                     
                     if 'abet' in abet.text:
                         abet_list.append(self.careers_name[j])
-                        print("es abet")
                 else:
                     abet = CareerEducationPage.is_food_abet(self)
                     abet_list.append(self.careers_name[j])
-                    print("es abet")
             except TimeoutException as ex:
-                print("no es abet")
+                print("TimeoutException occurs, one career doesn't have abet certification.")
             j = j + 1
-        print("Las carreras con abet son:")
+        print("Careers which have abet certification are:")
         for element in abet_list:
             print(element)
 
 class CareerEducationPage(BasePage):
     def is_abet(self):
-        # Probably should search for this text in the specific page
-        # element, but as for now it works fine
         return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(CareerPageLocators.ABET_HREF))
     
     def is_oceanography_abet(self):
