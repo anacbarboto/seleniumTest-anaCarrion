@@ -26,7 +26,6 @@ class EspolEducationPage(BasePage):
         return self.driver.find_elements(By.XPATH, '//div[@id="'+codigo+'"]//div[@class="field-content"]//ul//li//a')
 
     def create_excel_file(self):
-
         wb = openpyxl.Workbook()
         hoja = wb.create_sheet("Hoja")
         hoja.append(('Carrera', 'Facultad', 'Link'))
@@ -46,17 +45,13 @@ class EspolEducationPage(BasePage):
                 self.driver.execute_script("arguments[0].click();", facultad)
                 ActionChains(self.driver).click_and_hold(facultad).perform()
             else:
-                self.driver.execute_script("arguments[0].setAttribute('class','accordion-toggle')", facultad)
-                self.driver.execute_script("arguments[0].setAttribute('aria-expanded','true')", facultad)
+                self.driver.execute_script("window.scrollTo(0, 0);")
+                self.driver.execute_script("arguments[0].click();", facultad)
                 
             #Leer nombres de las materias
             if (facultad.get_attribute("aria-expanded")):
                 todas_las_materias = self.get_classes(codigo)
                 for materia in todas_las_materias:
-                    self.driver.execute_script("arguments[0].setAttribute('class','panel-collapse collapse in')", materia)
-                    self.driver.execute_script("arguments[0].setAttribute('aria-expanded','true')", materia)
-                    self.driver.execute_script("arguments[0].setAttribute('style','')", materia)
-                    
                     href.append(materia.get_attribute("href"))
 
                     c = c + 1
@@ -71,10 +66,7 @@ class EspolEducationPage(BasePage):
         self.list_href = href
     
     def show_abet_list(self):
-
-        self.driver.get(self.driver.current_url)
-        time.xsleep(2)
-        self.driver.refresh()
+        self.driver.execute_script("window.scrollTo(0, 0);")
 
         abet_list = []
 
