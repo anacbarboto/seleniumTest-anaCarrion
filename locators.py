@@ -5,7 +5,7 @@ class EspolEducationLocators(object):
 
     FACULTY_LIST = (By.XPATH, '//div[@class="panel-heading"]//h4[@class="panel-title"]//a')
 
-class CareerPageLocators(object):
+class CareerEducationLocators(object):
     """A class for search results locators. All search results locators should
     come here"""
 

@@ -1,12 +1,23 @@
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+
+from locators import EspolEducationLocators, CareerEducationLocators
 
 
 class EspolEducationElement(object):
-    """Base page class that is initialized on every page object class."""
+    def get_faculties(self):
+        return WebDriverWait(self.driver, 20).until(EC.visibility_of_all_elements_located(EspolEducationLocators.FACULTY_LIST))
 
-    def __set__(self, obj, value):
-        """Sets the text to the value supplied"""
+    def get_classes(self, code):
+        return self.driver.find_elements(By.XPATH, '//div[@id="'+code+'"]//div[@class="field-content"]//ul//li//a')
 
-
-    def __get__(self, obj, owner):
-        """Gets the text of the specified object"""
+class CareerEducationElement(object):
+    def is_abet(self):
+        return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(CareerEducationLocators.ABET_HREF))
+    
+    def is_oceanography_abet(self):
+        return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(CareerEducationLocators.ABET_OCEANOGRAPHY))
+    
+    def is_food_abet(self):
+        return WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(CareerEducationLocators.ABET_FOOD))
