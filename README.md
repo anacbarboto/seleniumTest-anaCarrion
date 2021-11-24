@@ -29,5 +29,8 @@ To achieve these goals I applied the Page Objects design pattern and I got these
 4. In element.py there are 2 classes EspolEducationElement and CareerEducationElement, both objects use any locators to get one or mor html objects.
 
 ###### To use:
-- open cmd or terminal
-- run "python3 main.py"
+- open cmd or terminal.
+- create a new enviroment running "python3 -m vevn NAME_ENVIROMENT".
+- activate your new enviroment running "test2\Scripts\activate" (windows) or "source test2/bin/activate" (ubuntu).
+- run "pip install -r requirements.txt" to downloads necessary libraries.
+- run "python3 main.py" to test Python program.
