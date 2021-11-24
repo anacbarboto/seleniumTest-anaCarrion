@@ -31,6 +31,6 @@ To achieve these goals I applied the Page Objects design pattern and I got these
 ###### To use:
 - open cmd or terminal.
 - create a new enviroment running "python3 -m vevn NAME_ENVIROMENT".
-- activate your new enviroment running "test2\Scripts\activate" (windows) or "source test2/bin/activate" (ubuntu).
+- activate your new enviroment running "NAME_ENVIROMENT\Scripts\activate" (windows) or "source NAME_ENVIROMENT/bin/activate" (ubuntu).
 - run "pip install -r requirements.txt" to downloads necessary libraries.
 - run "python3 main.py" to test Python program.
