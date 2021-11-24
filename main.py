@@ -9,7 +9,7 @@ class ESPOLSearch(unittest.TestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        self.driver = webdriver.Chrome(executable_path="C:\\Users\\User\\Downloads\\chromedriver.exe", chrome_options=options)
+        self.driver = webdriver.Chrome(executable_path="chromeDriver\chromedriver.exe", chrome_options=options)
         self.driver.maximize_window()
         self.driver.get("https://www.espol.edu.ec/es/educacion")
 
