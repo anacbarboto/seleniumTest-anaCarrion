@@ -1,7 +1,7 @@
 # Selenium Test by Ana Carrión Barbotó
 
 Thi program Python uses ESPOL Education page as principal and each career page as secondary
-![](images/exercise1.JPG)
+![](images/c4.JPG)
 
 Goals:
 - Create a driver which simulate that a user get into ESPOL Education web page and read each faculty and their each carrer. 
