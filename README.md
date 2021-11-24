@@ -22,9 +22,9 @@ To achieve these goals I applied the Page Objects design pattern and I got these
   ![](images/exercise2.JPG)
 3. In locators.py there are all locators to use of each web page. Inspecting ESPOL Education page and Careers page, I have these XPATHs:
 - FACULTY_LIST -> both html elements of faculties has <div class="panel-heading></div> next to <h4 class="panel-title"></h4> and next to <a></a>.
-- ABET_HREF -> all careers have an element which contains abet url <a href="http://www.abet.org"></a> except 2 careers
- - OCEANOGRAPHY -> which has an a tag with href="https://amspub.abet.org/aps/category-search?disciplines=57"
- - FOOD -> which has an img tag with src="/sites/fimcp.espol.edu.ec/files/EAC-RGB-W-L.jpg"
+- ABET_HREF -> all careers have an element which contains abet url <a href="http://www.abet.org"></a> except 2 careers:
+  - OCEANOGRAPHY -> which has an a tag with href="https://amspub.abet.org/aps/category-search?disciplines=57"
+  - FOOD -> which has an img tag with src="/sites/fimcp.espol.edu.ec/files/EAC-RGB-W-L.jpg"
 4. In element.py there are 2 classes EspolEducationElement and CareerEducationElement, both objects use any locators to get one or mor html objects.
 
 To use:
