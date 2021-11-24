@@ -1,6 +1,7 @@
 import unittest
 from selenium import webdriver
 import page
+from webdriver_manager.chrome import ChromeDriverManager
 
 
 class ESPOLSearch(unittest.TestCase):
@@ -9,7 +10,7 @@ class ESPOLSearch(unittest.TestCase):
     def setUp(self):
         options = webdriver.ChromeOptions()
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        self.driver = webdriver.Chrome(executable_path="chromeDriver\chromedriver.exe", chrome_options=options)
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.maximize_window()
         self.driver.get("https://www.espol.edu.ec/es/educacion")
 
