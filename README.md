@@ -3,10 +3,11 @@
 This Python program uses ESPOL Education page as principal and each career page as secondary
 ![](images/C4.JPG)
 
-Goals:
+###### Goals:
 - Create a driver which simulate that a user get into ESPOL Education web page and read each faculty and their each carrer. 
 - Current driver opens each ESPOL carrers web page and validate if it has abet certification.
 
+###### Solution
 To achieve these goals I applied the Page Objects design pattern and I got these objects:
 ![](images/diagram_solution.jpeg)
 1. In main.py there is a class called ESPOLSearch which contains 3 methods:
@@ -27,6 +28,6 @@ To achieve these goals I applied the Page Objects design pattern and I got these
   - FOOD -> which has an img tag with src="/sites/fimcp.espol.edu.ec/files/EAC-RGB-W-L.jpg"
 4. In element.py there are 2 classes EspolEducationElement and CareerEducationElement, both objects use any locators to get one or mor html objects.
 
-To use:
+###### To use:
 - open cmd or terminal
 - run "python3 main.py"
