@@ -29,4 +29,4 @@ To achieve these goals I applied the Page Objects design pattern and I got these
 
 To use:
 - open cmd or terminal
-- run "python3 principal.py"
+- run "python3 main.py"
